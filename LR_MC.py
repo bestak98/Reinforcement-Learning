@@ -15,7 +15,7 @@ class LRWorld():
             reward = -1 #왼쪽으로 움직일 때 보상:-1
         elif a==1:
             self.move_right()
-            reward = +1 #오른쪽으로 움직일 때 보상:+1
+            reward = +10 #오른쪽으로 움직일 때 보상:+1
         i = i + 1
         
         
@@ -36,7 +36,7 @@ class LRWorld():
       
       #6번 움직이면 종료
     def is_done(self):    
-        if i == 6:                      
+        if i == 7:                      
             return True                            
         else:            
             return False
@@ -69,9 +69,9 @@ def main():
     data = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     gamma = 1.0
     
-    alpha = 0.1
+    alpha = 1
 
-    for k in range(50000):
+    for k in range(100000):
         done = False
         global i
         i=0
@@ -81,7 +81,6 @@ def main():
             (x_prime), reward, done = env.step(action)
             x_prime = env.get_state()
             data[x] = data[x] + alpha*(reward+gamma*data[x_prime]-data[x])
-            
         env.reset()
             
     print(data)

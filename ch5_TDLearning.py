@@ -79,7 +79,7 @@ def main():
     data = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
     gamma = 1.0
     reward = -1
-    alpha = 1
+    alpha = 0.01
 
     for k in range(50000):
         done = False
