@@ -81,14 +81,16 @@ def main():
     reward = -1
     alpha = 0.01
 
-    for k in range(50000):
+    for k in range(2):
         done = False
         while not done:
             x, y = env.get_state()
             action = agent.select_action()
             (x_prime, y_prime), reward, done = env.step(action)
             x_prime, y_prime = env.get_state()
+            #print(x,x_prime,y,y_prime)
             data[x][y] = data[x][y] + alpha*(reward+gamma*data[x_prime][y_prime]-data[x][y])
+            #print(x, x_prime, y, y_prime)
         env.reset()
             
     for row in data:
