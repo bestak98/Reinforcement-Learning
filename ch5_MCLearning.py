@@ -78,24 +78,30 @@ def main():
     data = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
     gamma = 1.0
     
-    alpha = 0.001
+    alpha = 1
 
-    for k in range(50000):
+    for k in range(1):
         done = False
-        history = []
+        history = [] #(0,0,0)
 
         while not done:
             action = agent.select_action()
+            print("action", action)
+            a,b = env.get_state()
+            # print("dd", a,b)
             (x,y), reward, done = env.step(action)
-            history.append((x,y,reward))
+            history.append((a,b,reward))
+            print("history", history)
         env.reset()
 
         cum_reward = 0
         for transition in history[::-1]:
             x, y, reward = transition
+            # print(x,y)
+            cum_reward = reward + gamma*cum_reward 
             data[x][y] = data[x][y] + alpha*(cum_reward-data[x][y])
-            cum_reward = reward + gamma*cum_reward  # 책에 오타가 있어 수정하였습니다
             
+        #print( "---")
     for row in data:
         print(row)
 
