@@ -76,7 +76,6 @@ def main():
     #TD
     env = LRWorld()
     agent = Agent()
-    global data2
     
     #테이블 만들기
     data2 = {}
