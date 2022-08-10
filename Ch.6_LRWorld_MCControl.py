@@ -61,19 +61,19 @@ class LRWorld():
 
 class QAgent():
     def __init__(self):
-        self.q_table = np.zeros((1, 127, 2)) # q벨류를 저장하는 변수. 모두 0으로 초기화. 
+        self.q_table = np.zeros((127, 2)) # q벨류를 저장하는 변수. 모두 0으로 초기화. 
         self.eps = 0.9 
         self.alpha = 0.01
         
     def select_action(self, s):
         # eps-greedy로 액션을 선택
         for s,keys in enumerate(data2):
-            move_way = s+1
+            x = s+1
         coin = random.random()
         if coin < self.eps:
             action = random.randint(0,1)
         else:
-            action_val = self.q_table[1,move_way,:]
+            action_val = self.q_table[x,:]
             action = np.argmax(action_val)
         return action
 
@@ -82,9 +82,9 @@ class QAgent():
         cum_reward = 0
         for transition in history[::-1]:
             s, a, r, s_prime = transition
-            move_way = s
+            x = s
             # 몬테 카를로 방식을 이용하여 업데이트.
-            self.q_table[1,move_way,a] = self.q_table[1,move_way,a] + self.alpha * (cum_reward - self.q_table[1,move_way,a])
+            self.q_table[x,a] = self.q_table[x,a] + self.alpha * (cum_reward - self.q_table[x, a])
             cum_reward = cum_reward + r 
 
     def anneal_eps(self):
@@ -94,13 +94,11 @@ class QAgent():
     def show_table(self):
         # 학습이 각 위치에서 어느 액션의 q 값이 가장 높았는지 보여주는 함수
         q_lst = self.q_table.tolist()
-        data = np.zeros((1,127))
+        data = np.zeros((127))
         for row_idx in range(len(q_lst)):
             row = q_lst[row_idx]
-            for col_idx in range(len(row)):
-                col = row[col_idx]
-                action = np.argmax(col)
-                data[row_idx, col_idx] = action
+            action = np.argmax(row)
+            data[row_idx] = action
         print(data)
 
 def main():

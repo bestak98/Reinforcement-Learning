@@ -114,7 +114,7 @@ def main():
     
     alpha = 0.001
 
-    for k in range(1):
+    for k in range(10000):
         done = False
         history = [([],0)] #([],0)
         global i
